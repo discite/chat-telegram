@@ -1,0 +1,71 @@
+version: "3"
+networks:
+  proxy:
+    external: true
+  internal:
+    external: false
+
+services:
+  nginx:
+    image: 'bitnami/nginx'
+    ports:
+      - '8040:8888'
+    labels:
+      - traefik.backend=nginx
+      - traefik.frontend.rule=Host:chat.exmetsrl.com
+      - traefik.docker.network=proxy
+      - traefik.port=8888  
+    networks:
+      - internal
+      - proxy
+    links:
+      - phpfpm
+    volumes:
+      - ./logs/access.log:/opt/bitnami/nginx/logs/myapp-access.log
+      - ./logs/error.log:/opt/bitnami/nginx/logs/myapp-error.log
+      - ./nginx/app.conf:/bitnami/nginx/conf/vhosts/app.conf
+      - ./public:/myapps
+
+  phpfpm:
+    image: 'bitnami/php-fpm'
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./public:/myapps
+    networks:
+      - internal
+    labels:
+      - traefik.enable=false
+
+  mysql:
+    image: 'mariadb'
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./db-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=hakase-labs123
+    networks:
+      - internal
+    labels:
+      - traefik.enable=false
+
+  php_myadmin:
+    image: 'phpmyadmin/phpmyadmin'
+    restart: always
+    ports:
+      - '8080:80'
+    links:
+      - mysql:mysql
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: hakase-labs123
+      PMA_HOST: mysql
+    labels:
+      - traefik.backend=php_myadmin
+      - traefik.frontend.rule=Host:db-chat.exmetsrl.com
+      - traefik.docker.network=proxy
+      - traefik.port=8080
+    networks:
+      - internal
+      - proxy
