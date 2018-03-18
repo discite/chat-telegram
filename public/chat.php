@@ -1,6 +1,5 @@
 <?php
 session_start();
-include 'webhook.php';
 
 if(isset($_POST['ajaxsend']) && $_POST['ajaxsend']==true){
 	// Code to save and send chat
@@ -13,6 +12,7 @@ if(isset($_POST['ajaxsend']) && $_POST['ajaxsend']==true){
 	echo fread($chat,filesize("chatdata.txt"));
 	fclose($chat);
 	
+	include 'webhook.php';
     // Enviarselo a Telegram
 	sendMessage($chatId, $_SESSION['username'].': '.$_POST['chat']);
 	
