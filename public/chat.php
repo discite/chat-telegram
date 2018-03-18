@@ -12,7 +12,7 @@ if(isset($_POST['ajaxsend']) && $_POST['ajaxsend']==true){
 	echo fread($chat,filesize("chatdata.txt"));
 	fclose($chat);
 	
-	include 'webhook.php';
+	include_once 'webhook.php';
     // Enviarselo a Telegram
 	sendMessage($chatId, $_SESSION['username'].': '.$_POST['chat']);
 	
