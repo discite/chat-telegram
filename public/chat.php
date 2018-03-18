@@ -8,13 +8,14 @@ if(isset($_POST['ajaxsend']) && $_POST['ajaxsend']==true){
 	$data="<b>".$_SESSION['username'].':</b> '.$_POST['chat']."<br>";
 	fwrite($chat,$data);
 	fclose($chat);
-	// Enviarselo a Telegram
-	sendMessage($chatId, $_SESSION['username'].': '.$_POST['chat']);
-	
 
 	$chat = fopen("chatdata.txt", "r");
 	echo fread($chat,filesize("chatdata.txt"));
 	fclose($chat);
+	
+    // Enviarselo a Telegram
+	sendMessage($chatId, $_SESSION['username'].': '.$_POST['chat']);
+	
 } else if(isset($_POST['ajaxget']) && $_POST['ajaxget']==true){
 	// Code to send chat history to the user
 	$chat = fopen("chatdata.txt", "r");
