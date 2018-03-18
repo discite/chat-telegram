@@ -40,7 +40,7 @@ function sendMessage($chatId, $text)
   return $response;
 }
 
-if (count(get_included_files()) == 0){
+if (count(get_included_files()) <= 1){
     $request = file_get_contents("php://input");
 
     $date = date('Y-m-d H:i:s');
