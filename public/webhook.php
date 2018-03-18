@@ -1,6 +1,6 @@
 <?php
 
-$TOKEN = "bot569421604:AAGv8ZCrjpuZrTDTmrNdF2ZicvG8WrkVeGE";
+$TOKEN = "569421604:AAGv8ZCrjpuZrTDTmrNdF2ZicvG8WrkVeGE";
 $TELEGRAM = "https://api.telegram.org:443/bot$TOKEN"; 
 $chatId = "549328634";
 
