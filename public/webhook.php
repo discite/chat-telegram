@@ -40,19 +40,23 @@ function sendMessage($chatId, $text)
   return $response;
 }
 
-$request = file_get_contents("php://input");
+if (count(get_included_files()) == 0){
+    $request = file_get_contents("php://input");
 
-$date = date('Y-m-d H:i:s');
+    $date = date('Y-m-d H:i:s');
+    
+    $content = "$date\n$request\n\n";
+    
+    file_put_contents("webhook.log", $content, FILE_APPEND);
+    
+    $first_name = $request->message->from->first_name;
+    $text = $request->message->text;
+    
+    $chat = fopen("chatdata.txt", "a");
+    $data="<b>".$first_name.':</b> '.$text."<br>";
+    fwrite($chat,$data);
+    fclose($chat);
+}
 
-$content = "$date\n$request\n\n";
 
-file_put_contents("webhook.log", $content, FILE_APPEND);
-
-$first_name = $request->message->from->first_name;
-$text = $request->message->text;
-
-$chat = fopen("chatdata.txt", "a");
-$data="<b>".$first_name.':</b> '.$text."<br>";
-fwrite($chat,$data);
-fclose($chat);
 
