@@ -1,3 +1,4 @@
 logs/access.log
 logs/error.log
 db-data/
+public/chatdata.txt
