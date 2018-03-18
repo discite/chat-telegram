@@ -9,7 +9,7 @@ if(isset($_POST['ajaxsend']) && $_POST['ajaxsend']==true){
 	fwrite($chat,$data);
 	fclose($chat);
 	// Enviarselo a Telegram
-	sendMessage($chatId, $data);
+	sendMessage($chatId, $_SESSION['username'].': '.$_POST['chat']);
 	
 
 	$chat = fopen("chatdata.txt", "r");
