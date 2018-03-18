@@ -49,7 +49,7 @@ if (count(get_included_files()) <= 1){
     
     file_put_contents("webhook.log", $content, FILE_APPEND);
     
-    $request = json_decode($request, $assoc=false)
+    $request = json_decode($request, $assoc=false);
     
     $first_name = $request->message->from->first_name;
     $text = $request->message->text;
