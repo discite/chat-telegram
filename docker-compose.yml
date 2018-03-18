@@ -8,8 +8,6 @@ networks:
 services:
   nginx:
     image: 'bitnami/nginx'
-    ports:
-      - '8040:8888'
     labels:
       - traefik.backend=nginx
       - traefik.frontend.rule=Host:chat.exmetsrl.com
